@@ -10,10 +10,18 @@ function setup(){
     canvas=createCanvas(480,380);
     canvas.center();
 }
+function gotResults(error,results){
+    if(error){
+        console.log(error);
+    }
+    console.log(results);
+    objects=results;
+    
+    }
 function draw(){
     image(video,0,0,480,380);
     if(status!=""){
-        object.detect(video,gotResults);
+        objectDetector.detect(video,gotResults);
         for(i=0; i<objects.length;i++){
             document.getElementById("status").innerHTML="Status:object detected";
             document.getElementById("number_of_objects").innerHTML="number of objects detected:"+objects.length;
@@ -26,14 +34,7 @@ function draw(){
         }
     }
 }
-function gotResults(error,results){
-if(error){
-    console.log(error);
-}
-console.log(results);
-objects=results;
 
-}
 
 function start(){
     objectDetector=ml5.objectDetector('cocossd',modelLoaded);
